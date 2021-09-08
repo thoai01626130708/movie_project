@@ -33,10 +33,6 @@ export const dangNhapAction = (thongTinDangNhap) => {
 
 }
 
-
-
-
-
 export const layThongTinNguoiDungAction = (thongTinDangNhap) => {
 
 
@@ -52,11 +48,12 @@ export const layThongTinNguoiDungAction = (thongTinDangNhap) => {
                     type: SET_THONG_TIN_NGUOI_DUNG,
                     thongTinNguoiDung: result.data.content
                 });
-
+                
             }
 
         } catch (error) {
             console.log(error.response?.data);
+            
         }
 
     }
@@ -66,16 +63,14 @@ export const layThongTinNguoiDungAction = (thongTinDangNhap) => {
 export const capNhatThongTinNguoiDungAction = (thongTinCapNhat) => {
     return async (dispatch) => {
         try {
-            console.log(thongTinCapNhat)
             const result = await quanLyNguoiDungService.capNhatNguoiDung(thongTinCapNhat);
-
-            // if (result.data.statusCode === 200) {
-            //     dispatch({
-            //         type
-            //     })
-            // }
+            if (result.data.statusCode === 200) {
+                notifiFunction('success', 'Cập nhật người dùng thành công!');
+                
+            }
         } catch (error) {
             console.log(error.response?.data);
+            notifiFunction('error', 'Cập nhật người dùng thất bại!');
         }
     }
 }

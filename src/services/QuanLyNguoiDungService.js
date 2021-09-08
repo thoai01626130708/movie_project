@@ -15,7 +15,6 @@ export class QuanLyNguoiDungService  extends baseService{
     }
 
     capNhatNguoiDung = (thongTinCapNhat) => {
-        console.log('capNhatNguoiDung')
         return this.put('/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung', thongTinCapNhat);
     }
   

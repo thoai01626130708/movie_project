@@ -1,36 +1,19 @@
 import React, { useEffect } from 'react'
-import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { CustomCard } from "@tsamantanis/react-glassmorphism";
 import { Tabs } from "antd";
 import { capNhatThongTinNguoiDungAction, layThongTinNguoiDungAction } from '../../redux/actions/QuanLyNguoiDungAction';
 import { withFormik } from 'formik';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import * as Yup from 'yup';
+import { layDanhSachHeThongRapAction } from '../../redux/actions/QuanLyRapActions';
 
 const { TabPane } = Tabs;
 
 function Profile(props) {
-    // const { thongTinNguoiDung } = useSelector(state => state.QuanLyNguoiDungReducer);
-    // const formik = useFormik({
-    //     enableReinitialize: true,
-    //     initialValues: {
-    //         email: thongTinNguoiDung.email,
-    //         taiKhoan: thongTinNguoiDung.taiKhoan,
-    //         hoTen: thongTinNguoiDung.hoTen,
-    //         matKhau: thongTinNguoiDung.matKhau,
-    //         soDT: thongTinNguoiDung.soDT,
-    //         maNhom: thongTinNguoiDung.maNhom,
-    //         maLoaiNguoiDung: thongTinNguoiDung.maLoaiNguoiDung || 'KhachHang'
-    //     },
-
-    //     onSubmit: (values, { setSubmitting }) => {
-    //         dispatch(capNhatThongTinNguoiDungAction(values));
-    //         setSubmitting(false);
-    //     }
-    // });
-
     const {
+        thongTinHeThongRap,
         errors,
         values,
         handleChange,
@@ -41,7 +24,43 @@ function Profile(props) {
 
     useEffect(() => {
         dispatch(layThongTinNguoiDungAction());
-    }, [])
+        dispatch(layDanhSachHeThongRapAction())
+    }, [dispatch]);
+
+    const renderLichSuDatVe = () => {
+        return values.thongTinDatVe?.map(element => {
+            return element.danhSachGhe.map((item, index) => {
+                const thongTinRap = thongTinHeThongRap.filter(itemRap => itemRap.maHeThongRap === item.maHeThongRap)[0];
+                const diaChiRap = thongTinRap.lstCumRap.filter(itemRap => itemRap.tenCumRap === item.tenHeThongRap)[0];
+                return (
+                    <div className="grid grid-cols-6 gap-1" key={index}>
+                        <div>
+                            <img src={element.hinhAnh} alt={element.hinhAnh} style={{ height: 150, width: 150 }} />
+                        </div>
+                        <div className="col-span-4 grid grid-rows-3">
+                            <div className="w-1/2 grid grid-cols-6 gap-2">
+                                <div>
+                                    <img src={thongTinRap.logo} alt={thongTinRap.logo} style={{ height: 50, width: 50 }} />
+                                </div>
+                                <div className="col-span-5 grid grid-rows-2">
+                                    <div className="text-xl">
+                                        {item.maHeThongRap}
+                                    </div>
+                                    <div className="text-xm text-gray-500">
+                                        {diaChiRap.diaChi}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div className="my-5 border-solid border-4 border-yellow-200 w-2/3">
+                                Ngày đặt: {moment(element.ngayDat).format('DD/MM/YYYY HH:mm')} - {item.maCumRap} - ghế {item.tenGhe}
+                            </div>
+                        </div>
+                    </div>
+                );
+            });
+        });
+    };
 
     return (
         <div
@@ -145,30 +164,7 @@ function Profile(props) {
                         </TabPane>
                         <TabPane tab="Lịch sử đặt vé" key="2" style={{ minHeight: 300 }}>
                             <div className="w-full max-w-screen-lg">
-                                <div className="grid grid-cols-4 gap-4">
-                                    <div>
-                                        <img src="https://picsum.photos/200" alt="123" />
-                                    </div>
-                                    <div className="col-span-3 grid grid-rows-2">
-                                        <div className="w-1/2 grid grid-cols-3 gap-2">
-                                            <div>
-                                                <img src="https://picsum.photos/200" alt="123" />
-                                            </div>
-                                            <div className="col-span-2 grid grid-rows-2">
-                                                <div>
-                                                    Tên rạp
-                                                </div>
-                                                <div>
-                                                    Địa chỉ
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="my-5">
-                                            ngày tháng năm
-                                        </div>
-                                    </div>
-                                </div>
+                                {renderLichSuDatVe()}
                             </div>
 
                         </TabPane>
@@ -183,7 +179,6 @@ const EditUserForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: (props) => {
         const { thongTinNguoiDung } = props;
-
         return {
             email: thongTinNguoiDung.email,
             taiKhoan: thongTinNguoiDung.taiKhoan,
@@ -191,13 +186,14 @@ const EditUserForm = withFormik({
             matKhau: thongTinNguoiDung.matKhau,
             soDT: thongTinNguoiDung.soDT,
             maNhom: thongTinNguoiDung.maNhom,
-            maLoaiNguoiDung: thongTinNguoiDung.maLoaiNguoiDung || 'KhachHang'
+            maLoaiNguoiDung: thongTinNguoiDung.maLoaiNguoiDung || 'KhachHang',
+            thongTinDatVe: thongTinNguoiDung.thongTinDatVe
         }
     },
     validationSchema: Yup.object().shape({
         soDT: Yup.string().required('Phone number is required!'),
-        hoTen: Yup.string().required('Full name is required!'), 
-        matKhau: Yup.string().required('Password is required!'), 
+        hoTen: Yup.string().required('Full name is required!'),
+        matKhau: Yup.string().required('Password is required!'),
         email: Yup.string().required('Email is required!').email('Email is invalid!')
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
@@ -208,7 +204,8 @@ const EditUserForm = withFormik({
 
 const mapStateToProps = (state) => ({
 
-    thongTinNguoiDung: state.QuanLyNguoiDungReducer.thongTinNguoiDung
+    thongTinNguoiDung: state.QuanLyNguoiDungReducer.thongTinNguoiDung,
+    thongTinHeThongRap: state.QuanLyRapReducer.heThongRapChieu
 
 })
 
