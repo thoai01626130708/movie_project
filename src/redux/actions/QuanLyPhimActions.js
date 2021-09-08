@@ -6,8 +6,6 @@ import { notifiFunction } from "../../util/Notification/Notification";
 
 
 export const layDanhSachPhimAction = (tenPhim = '') => {
-
-
     return async (dispatch) => {
         try {
             //Sử dụng tham số thamSo

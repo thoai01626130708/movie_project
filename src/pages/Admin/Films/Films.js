@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect } from 'react'
-import { Button, Table } from 'antd';
+import { Button, Popconfirm, Table } from 'antd';
 
 import { Input } from 'antd';
-import { EditOutlined, SearchOutlined, DeleteOutlined,CalendarOutlined } from '@ant-design/icons';
+import { EditOutlined, SearchOutlined, DeleteOutlined, CalendarOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { layDanhSachPhimAction, xoaPhimAction } from '../../../redux/actions/QuanLyPhimActions';
 import { NavLink } from 'react-router-dom';
@@ -66,21 +66,27 @@ export default function Films() {
             width: '35%'
         },
         {
-            title: 'Hành động',
+            title: 'Thao tác',
             dataIndex: 'hanhDong',
             render: (text, film) => {
                 return <Fragment>
-                    <NavLink key={1} className=" mr-2  text-2xl" to={`/admin/films/edit/${film.maPhim}`}><EditOutlined style={{ color: 'blue' }} /> </NavLink>
-                    <span style={{ cursor: 'pointer' }} key={2} className="text-2xl" onClick={() => {
-                        //Gọi action xoá
-                        if (window.confirm('Bạn có chắc muốn xoá phim ' + film.tenPhim)) {
-                            //Gọi action
-                            dispatch(xoaPhimAction(film.maPhim));
-                        }
-                    }}><DeleteOutlined style={{ color: 'red' }} /> </span>
+                    <NavLink key={1} className=" mr-2  text-xl" to={`/admin/films/edit/${film.maPhim}`}><EditOutlined style={{ color: 'blue' }} /> </NavLink>
 
-                    <NavLink key={3} className=" mr-2 text-2xl" to={`/admin/films/showtime/${film.maPhim}/${film.tenPhim}`} onClick={()=>{
-                        localStorage.setItem('filmParams',JSON.stringify(film));
+                    <Popconfirm
+                        title="Bạn có chắc muốn xoá phim này?"
+                        onConfirm={() => {
+                            dispatch(xoaPhimAction(film.maPhim));
+                        }}
+
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <span style={{ cursor: 'pointer' }} key={2} className="text-xl" onClick={() => {
+                        }}><DeleteOutlined style={{ color: 'red' }} /> </span>
+                    </Popconfirm>
+
+                    <NavLink key={3} className=" mr-2 text-xl" to={`/admin/films/showtime/${film.maPhim}/${film.tenPhim}`} onClick={() => {
+                        localStorage.setItem('filmParams', JSON.stringify(film));
                     }}><CalendarOutlined style={{ color: 'green' }} /> </NavLink>
                 </Fragment>
             },
@@ -102,9 +108,7 @@ export default function Films() {
 
     return (
         <div>
-
-
-            <h3 className="text-4xl">Quản lý Phim</h3>
+            <h3 className="text-4xl">Quản lý phim</h3>
             <Button shape="round" type="primary" className="mb-5 bg-red-200" onClick={() => {
                 history.push('/admin/films/addnew');
             }}>Thêm phim</Button>

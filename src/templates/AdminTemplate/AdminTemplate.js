@@ -65,18 +65,27 @@ const AdminTemplate = (props) => { //path, exact, Component
                         <NavLink to="/"><img src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png" alt="..." /></NavLink>
                     </div>
                     <Menu theme="dark" defaultSelectedKeys="main1" mode="inline">
-                        <Menu.Item key="main1" icon={<UserOutlined />}>
+                        {/* <Menu.Item key="main1" icon={<UserOutlined />}>
                             <NavLink to="/admin/users">Users</NavLink>
-                        </Menu.Item>
-                        <SubMenu key="main2" icon={<FileOutlined />} title="Films">
-                            <Menu.Item key="sub1" icon={<FileOutlined />}>
-                                <NavLink to="/admin/films">Films</NavLink>
-
+                        </Menu.Item> */}
+                        <SubMenu key="users" icon={<UserOutlined />} title="Users">
+                            <Menu.Item key="userSub1" icon={<UserOutlined />}>
+                                <NavLink to="/admin/users">Users</NavLink>
                             </Menu.Item>
-                            <Menu.Item key="sub2" icon={<FileOutlined />}>
+                            <Menu.Item key="userSub2" icon={<UserOutlined />}>
+                                <NavLink to="/admin/users/addnew">Add New</NavLink>
+                            </Menu.Item>
+                        </SubMenu>
+
+                        <SubMenu key="films" icon={<FileOutlined />} title="Films">
+                            <Menu.Item key="filmSub1" icon={<FileOutlined />}>
+                                <NavLink to="/admin/films">Films</NavLink>
+                            </Menu.Item>
+                            <Menu.Item key="filmSub2" icon={<FileOutlined />}>
                                 <NavLink to="/admin/films/addnew">Add New</NavLink>
                             </Menu.Item>
                         </SubMenu>
+
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
