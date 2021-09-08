@@ -29,6 +29,10 @@ export class QuanLyNguoiDungService extends baseService {
     layDanhSachLoaiNguoiDung = () => {
         return this.get(`/api//QuanLyNguoiDung/LayDanhSachLoaiNguoiDung`)
     }
+    
+    capNhatNguoiDung = (thongTinCapNhat) => {
+        return this.put('/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung', thongTinCapNhat);
+    }
 
 }
 

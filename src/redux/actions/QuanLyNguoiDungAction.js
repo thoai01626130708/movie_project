@@ -98,3 +98,18 @@ export const layDanhSachLoaiNguoiDungAction = () => {
         }
     };
 }
+
+export const capNhatThongTinNguoiDungAction = (thongTinCapNhat) => {
+    return async (dispatch) => {
+        try {
+            console.log('thongTinCapNhat',thongTinCapNhat)
+            const result = await quanLyNguoiDungService.capNhatNguoiDung(thongTinCapNhat);
+            if (result.data.statusCode === 200) {
+                notifiFunction('success', 'Cập nhật người dùng thành công!');
+            }
+        } catch (error) {
+            console.log(error.response?.data);
+            notifiFunction('error', 'Cập nhật người dùng thất bại!');
+        }
+    }
+}
