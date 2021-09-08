@@ -62,7 +62,6 @@ const Edit = (props) => {
   })
 
   const handleChangeDatePicker = (value) => {
-    console.log('datepicker', value)
     let ngayKhoiChieu = value ? moment(value).format('DD/MM/YYYY') : undefined;
     formik.setFieldValue('ngayKhoiChieu', ngayKhoiChieu);
   }

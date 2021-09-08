@@ -1,6 +1,6 @@
-import { quanLyNguoiDungService } from "../../services/QuanLyNguoiDung"
+import { quanLyNguoiDungService } from "../../services/QuanLyNguoiDungService"
 import { DANG_NHAP_ACTION, SET_THONG_TIN_NGUOI_DUNG } from "./types/QuanLyNguoiDungType";
-import {history} from '../../App'
+import { history } from '../../App'
 import { notifiFunction } from "../../util/Notification/Notification";
 
 
@@ -33,10 +33,6 @@ export const dangNhapAction = (thongTinDangNhap) => {
 
 }
 
-
-
-
-
 export const layThongTinNguoiDungAction = (thongTinDangNhap) => {
 
 
@@ -52,13 +48,29 @@ export const layThongTinNguoiDungAction = (thongTinDangNhap) => {
                     type: SET_THONG_TIN_NGUOI_DUNG,
                     thongTinNguoiDung: result.data.content
                 });
-
+                
             }
 
         } catch (error) {
-            console.log('error', error.response.data);
+            console.log(error.response?.data);
+            
         }
 
     }
 
+}
+
+export const capNhatThongTinNguoiDungAction = (thongTinCapNhat) => {
+    return async (dispatch) => {
+        try {
+            const result = await quanLyNguoiDungService.capNhatNguoiDung(thongTinCapNhat);
+            if (result.data.statusCode === 200) {
+                notifiFunction('success', 'Cập nhật người dùng thành công!');
+                
+            }
+        } catch (error) {
+            console.log(error.response?.data);
+            notifiFunction('error', 'Cập nhật người dùng thất bại!');
+        }
+    }
 }

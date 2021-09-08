@@ -1,7 +1,7 @@
 import { baseService } from "./baseService";
-import { GROUPID} from '../util/settings/config'
 export class QuanLyNguoiDungService  extends baseService{
 
+    // eslint-disable-next-line no-useless-constructor
     constructor() {
         super();
     }
@@ -12,6 +12,10 @@ export class QuanLyNguoiDungService  extends baseService{
     
     layThongTinNguoiDung = () => {
         return this.post('/api/QuanLyNguoiDung/ThongTinTaiKhoan');
+    }
+
+    capNhatNguoiDung = (thongTinCapNhat) => {
+        return this.put('/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung', thongTinCapNhat);
     }
   
 }
