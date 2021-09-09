@@ -31,7 +31,7 @@ function Profile(props) {
         return values.thongTinDatVe?.map(element => {
             return element.danhSachGhe.map((item, index) => {
                 const thongTinRap = thongTinHeThongRap.filter(itemRap => itemRap.maHeThongRap === item.maHeThongRap)[0];
-                const diaChiRap = thongTinRap.lstCumRap.filter(itemRap => itemRap.tenCumRap === item.tenHeThongRap)[0];
+                const diaChiRap = thongTinRap.lstCumRap?.filter(itemRap => itemRap.tenCumRap === item.tenHeThongRap)[0];
                 return (
                     <div className="grid grid-cols-6 gap-1" key={index}>
                         <div>

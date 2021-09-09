@@ -38,8 +38,6 @@ export const themPhimUploadHinhAction = (formData) => {
 export const capNhatPhimUploadAction = (formData) => {
     return async (dispatch) => {
         try {
-
-
             await quanLyPhimService.capNhatPhimUpload(formData);
             notifiFunction('success', 'Cập nhật phim thành công!');
 
