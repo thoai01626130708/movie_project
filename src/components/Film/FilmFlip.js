@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 export default function FilmFlip(props) {
 
     const { item } = props;
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
 
     return (

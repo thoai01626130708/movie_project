@@ -4,7 +4,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { layDanhSachNguoiDungAction, xoaNguoiDungAction } from '../../../redux/actions/QuanLyNguoiDungAction';
 import { history } from '../../../App';
-import { NavLink } from 'react-router-dom';
 import { SET_USER_EDIT } from '../../../redux/actions/types/QuanLyNguoiDungType';
 
 export default function Users() {
@@ -14,7 +13,7 @@ export default function Users() {
     useEffect(() => {
         dispatch(layDanhSachNguoiDungAction());
 
-    }, [])
+    }, [dispatch])
 
     const onSearch = (value) => {
         dispatch(layDanhSachNguoiDungAction(value));

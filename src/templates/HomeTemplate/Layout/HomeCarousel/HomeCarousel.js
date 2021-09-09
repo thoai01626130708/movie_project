@@ -24,7 +24,7 @@ export default function HomeCarousel(props) {
     //Sẽ tự kích hoạt khi component load ra 
     useEffect(() => {
         dispatch(getCarouselAction());
-    }, [])
+    }, [dispatch])
 
 
     const renderImg = () => {

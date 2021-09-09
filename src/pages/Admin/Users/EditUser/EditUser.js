@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
-import { capNhatThongTinNguoiDungAdminAction, layDanhSachLoaiNguoiDungAction, themNguoiDungAction } from '../../../../redux/actions/QuanLyNguoiDungAction';
+import { capNhatThongTinNguoiDungAdminAction, layDanhSachLoaiNguoiDungAction } from '../../../../redux/actions/QuanLyNguoiDungAction';
 import { GROUPID, USER_TYPE_CUSTOMER } from '../../../../util/settings/config';
 
 
@@ -21,7 +21,7 @@ function EditUser(props) {
 
     useEffect(() => {
         dispatch(layDanhSachLoaiNguoiDungAction());
-    }, [])
+    }, [dispatch])
 
     return (
         <>

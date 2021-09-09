@@ -5,7 +5,6 @@ import { TOKEN, USER_LOGIN } from "../../util/settings/config";
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
     FileOutlined,
-    HomeOutlined,
     UserOutlined
 } from '@ant-design/icons';
 import { NavLink } from "react-router-dom";
