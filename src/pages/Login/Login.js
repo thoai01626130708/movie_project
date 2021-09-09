@@ -10,7 +10,7 @@ import { INPUT_PASSWORD, INPUT_USERNAME, NOT_HAVE_ACCOUNT, PASSWORD, SIGN_IN, SI
 export default function Login(props) {
 
     const dispatch = useDispatch();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const formik = useFormik({
         initialValues: {

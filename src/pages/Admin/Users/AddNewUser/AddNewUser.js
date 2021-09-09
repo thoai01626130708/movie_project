@@ -20,7 +20,7 @@ function AddNewUser(props) {
 
     useEffect(() => {
         dispatch(layDanhSachLoaiNguoiDungAction());
-    }, [])
+    }, [dispatch])
 
     return (
         <>

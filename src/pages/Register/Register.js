@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { history } from '../../App';
 import { dangKyAction } from '../../redux/actions/QuanLyNguoiDungAction';
-import * as Yup from 'yup';
 import { USER_LOGIN, TOKEN, FULLNAME, GROUPID, INPUT_EMAIL, INPUT_FULLNAME, INPUT_PASSWORD, INPUT_PHONE, INPUT_USERNAME, PASSWORD, PHONE_NUMBER, SIGN_UP, USERNAME } from '../../util/settings/config';
 
 export default function Register(props) {
@@ -12,7 +11,7 @@ export default function Register(props) {
         history.push('/home');
     }
     const dispatch = useDispatch();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const formik = useFormik({
         initialValues: {

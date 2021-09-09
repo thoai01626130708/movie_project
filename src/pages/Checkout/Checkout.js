@@ -1,31 +1,26 @@
-import React, { useEffect } from 'react'
-import { Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { datGheAction, layChiTietPhongVeAction } from '../../redux/actions/QuanLyDatVeActions';
+import { datGheAction, layChiTietPhongVeAction, datVeAction } from '../../redux/actions/QuanLyDatVeActions';
 import style from './Checkout.module.css';
 import { CheckOutlined, CloseOutlined, UserOutlined, SmileOutlined, HomeOutlined } from '@ant-design/icons'
 import './Checkout.css';
 import _ from 'lodash';
 import { ThongTinDatVe } from '../../_core/models/ThongTinDatVe';
-import { datVeAction } from '../../redux/actions/QuanLyDatVeActions';
-
 import { Tabs } from 'antd';
 import { layThongTinNguoiDungAction } from '../../redux/actions/QuanLyNguoiDungAction';
 import moment from 'moment';
 import { connection } from '../../index';
 import { history } from '../../App';
-import { ADDRESS, BOOKING, DATE, THEATER_NAME, TIME, TOKEN, USER_LOGIN } from '../../util/settings/config';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CHANGE_TAB_ACTIVE, DAT_GHE } from '../../redux/actions/types/QuanLyDatVeType';
-import { LOG_OUT, CHOOSE_SEAT_AND_PAY, BOOKING_RESULT, HELLO, BOOKING_HISTORY, BOOKING_HISTORY_MESSAGE, SCREEN, SEAT_CODE, DATE_TIME, AVAILABLE, RESERVED, VIP, SELECTED, OCCUPIED, YOUR_RESERVATION } from "../../util/settings/config";
-
+import { ADDRESS, BOOKING, DATE, THEATER_NAME, TIME, TOKEN, USER_LOGIN, LOG_OUT, CHOOSE_SEAT_AND_PAY, BOOKING_RESULT, HELLO, BOOKING_HISTORY, BOOKING_HISTORY_MESSAGE, SCREEN, SEAT_CODE, DATE_TIME, AVAILABLE, RESERVED, VIP, SELECTED, OCCUPIED, YOUR_RESERVATION } from "../../util/settings/config";
 
 function Checkout(props) {
 
     const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
     const { chiTietPhongVe, danhSachGheDangDat, danhSachGheKhachDat } = useSelector(state => state.QuanLyDatVeReducer);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -75,7 +70,8 @@ function Checkout(props) {
             window.removeEventListener('beforeunload', clearGhe);
         }
 
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch])
 
     const clearGhe = function (event) {
         connection.invoke('huyDat', userLogin.taiKhoan, props.match.params.id);
@@ -83,6 +79,23 @@ function Checkout(props) {
 
     const { thongTinPhim, danhSachGhe } = chiTietPhongVe;
 
+    const renderTrangThaiGhe = (ghe, classGheDaDuocDat, classGheKhachDat) => {
+        if (ghe.daDat) {
+            return (
+                classGheDaDuocDat !== ''
+                    ?
+                    <UserOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} />
+                    :
+                    <CloseOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} />
+            );
+        } else {
+            return classGheKhachDat !== ''
+                ?
+                <SmileOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} />
+                :
+                ghe.stt
+        }
+    }
 
     const renderSeats = () => {
         return danhSachGhe.map((ghe, index) => {
@@ -118,8 +131,21 @@ function Checkout(props) {
 
 
                 }} disabled={ghe.daDat || classGheKhachDat !== ''} className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat} ${classGheKhachDat} text-center`} key={index}>
-
-                    {ghe.daDat ? classGheDaDuocDat !== '' ? <UserOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} /> : <CloseOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} /> : classGheKhachDat !== '' ? <SmileOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} /> : ghe.stt}
+                    {renderTrangThaiGhe(ghe, classGheDaDuocDat, classGheKhachDat)}
+                    {/* {ghe.daDat
+                        ?
+                        classGheDaDuocDat !== ''
+                            ?
+                            <UserOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} />
+                            :
+                            <CloseOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} />
+                        :
+                        classGheKhachDat !== ''
+                            ?
+                            <SmileOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} />
+                            :
+                            ghe.stt
+                    } */}
 
                 </button>
 
@@ -232,7 +258,7 @@ const { TabPane } = Tabs;
 export default function CheckoutTab(props) {
     const { tabActive } = useSelector(state => state.QuanLyDatVeReducer);
     const dispatch = useDispatch();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer)
     useEffect(() => {
@@ -281,14 +307,14 @@ export default function CheckoutTab(props) {
 
 
 function KetQuaDatVe(props) {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const { thongTinNguoiDung } = useSelector(state => state.QuanLyNguoiDungReducer);
 
     useEffect(() => {
         const action = layThongTinNguoiDungAction();
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
     const renderTicketItem = function () {
         return thongTinNguoiDung.thongTinDatVe?.map((ticket, index) => {

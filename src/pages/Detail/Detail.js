@@ -14,7 +14,7 @@ const { TabPane } = Tabs;
 
 export default function Detail(props) {
 
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const filmDetail = useSelector(state => state.QuanLyPhimReducer.filmDetail);
 
@@ -24,7 +24,7 @@ export default function Detail(props) {
 
     useEffect(() => {
         //Lấy thông tin param từ url
-        let { id } = props.match.params;
+        const { id } = props.match.params;
         dispatch(layThongTinChiTietPhim(id));
         setFilmDetail(filmDetail.hinhAnh);
     }, [])

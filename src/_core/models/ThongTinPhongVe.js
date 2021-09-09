@@ -1,12 +1,3 @@
-export class ThongTinLichChieu {
-    thongTinPhim = new ThongTinPhim();
-    danhSachGhe = [];
-
-
-
-}
-
-
 export class ThongTinPhim {
     maLichChieu = '';
     tenCumRap = '';
@@ -16,6 +7,14 @@ export class ThongTinPhim {
     hinhAnh ='';
     ngayChieu ='';
     gioChieu = '';
+}
+
+export class ThongTinLichChieu {
+    thongTinPhim = new ThongTinPhim();
+    danhSachGhe = [];
+
+
+
 }
 
 export class Ghe  {
