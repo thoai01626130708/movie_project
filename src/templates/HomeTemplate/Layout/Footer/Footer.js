@@ -11,7 +11,7 @@ export default function Footer(props) {
    
     const arrHeThongRap = _.map(heThongRapChieu,(heThongRap) => _.pick(heThongRap,['maHeThongRap','tenHeThongRap','logo']));
 
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <footer className="py-6 bg-coolGray-100 text-coolGray-900 bg-gray-800">

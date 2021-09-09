@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Form, Button, Select } from 'antd';
-import { DatePicker } from 'antd';
-import { InputNumber } from 'antd';
+import { Form, Select, DatePicker, InputNumber } from 'antd';
 import { quanLyRapService } from '../../../services/QuanLyRapService';
 import { useFormik } from 'formik';
 import moment from 'moment';
@@ -36,7 +34,9 @@ export default function ShowTime(props) {
         cumRapChieu: []
     })
 
-    useEffect(() => { layThongTinHeThongRap() }, [])
+    useEffect(() => {
+        layThongTinHeThongRap()
+    }, [])
 
     const layThongTinHeThongRap = async (value) => {
         try {
@@ -95,12 +95,12 @@ export default function ShowTime(props) {
 
     const layout = {
         labelCol: {
-          span: 8,
+            span: 8,
         },
         wrapperCol: {
-          span: 16,
+            span: 16,
         },
-      };
+    };
     return (
         <div className="container">
             <Form {...layout}

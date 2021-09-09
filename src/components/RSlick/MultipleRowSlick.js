@@ -72,12 +72,11 @@ const MultipleRowSlick = (props) => {
     speed: 500,
     rows: 2,
     slidesPerRow: 2,
-    variableWidth: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <div>
