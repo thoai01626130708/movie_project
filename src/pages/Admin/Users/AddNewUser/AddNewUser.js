@@ -3,7 +3,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
-import { layDanhSachLoaiNguoiDungAction } from '../../../../redux/actions/QuanLyNguoiDungAction';
+import { layDanhSachLoaiNguoiDungAction, themNguoiDungAction } from '../../../../redux/actions/QuanLyNguoiDungAction';
+import { GROUPID, USER_TYPE_CUSTOMER } from '../../../../util/settings/config';
 
 
 function AddNewUser(props) {
@@ -24,7 +25,7 @@ function AddNewUser(props) {
     return (
         <>
             <p style={{ fontSize: "25px", fontWeight: "bold", marginBottom: '50px' }}>Thêm người dùng</p>
-            <form className="w-full max-w-screen-lg">
+            <form className="w-full max-w-screen-lg" onSubmitCapture={handleSubmit}>
                 <div className="grid grid-cols-2 gap-1">
                     <div className="md:flex md:items-center mb-6">
                         <div className="md:w-1/3">
@@ -33,7 +34,8 @@ function AddNewUser(props) {
                             </label>
                         </div>
                         <div className="md:w-2/3">
-                            <input name="taiKhoan" className="appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-account" type="text" />
+                            <input name="taiKhoan" onChange={handleChange} className="appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-account" type="text" />
+                            <div className="text-red-500">{errors.taiKhoan}</div>
                         </div>
                     </div>
 
@@ -45,7 +47,8 @@ function AddNewUser(props) {
                             </label>
                         </div>
                         <div className="md:w-2/3">
-                            <input name="email" className="appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-email" type="text" />
+                            <input name="email" onChange={handleChange} className="appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-email" type="text" />
+                            <div className="text-red-500">{errors.email}</div>
                         </div>
                     </div>
 
@@ -56,7 +59,8 @@ function AddNewUser(props) {
                             </label>
                         </div>
                         <div className="md:w-2/3">
-                            <input name="matKhau" className="appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-password" type="password" />
+                            <input name="matKhau" onChange={handleChange} className="appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-password" type="password" />
+                            <div className="text-red-500">{errors.matKhau}</div>
                         </div>
                     </div>
 
@@ -67,7 +71,18 @@ function AddNewUser(props) {
                             </label>
                         </div>
                         <div className="md:w-2/3">
-                            <input name="soDt" className="appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-phone-number" type="text" />
+                            <input name="soDt" onChange={handleChange} className="appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-phone-number" type="text"
+                                onKeyDown={(e) => {
+                                    if (!((e.key >= 0 && e.key <= 9)
+                                        || (e.key === 'Backspace')
+                                        || (e.key === 'ArrowLeft')
+                                        || (e.key === 'ArrowRight')
+                                        || (e.key === 'Tab')
+                                        || (e.ctrlKey && (e.key === 'a' || e.key === 'c' || e.key === 'x' || e.key === 'v')))) {
+                                        e.preventDefault();
+                                    }
+                                }} />
+                            <div className="text-red-500">{errors.soDt}</div>
                         </div>
                     </div>
 
@@ -78,7 +93,8 @@ function AddNewUser(props) {
                             </label>
                         </div>
                         <div className="md:w-2/3">
-                            <input name="hoTen" className="appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" />
+                            <input name="hoTen" onChange={handleChange} className="appearance-none border-2 border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" />
+                            <div className="text-red-500">{errors.hoTen}</div>
                         </div>
                     </div>
 
@@ -90,7 +106,7 @@ function AddNewUser(props) {
                         </div>
                         <div className="md:w-2/3">
                             <div className="relative">
-                                <select name="loaiNguoiDung" className="block appearance-none w-full border-2 border-gray-500 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-user-type">
+                                <select name="maLoaiNguoiDung" onChange={handleChange} className="block appearance-none w-full border-2 border-gray-500 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-user-type">
                                     {arrUserType.map((userType, index) => {
                                         return <option key={index} value={userType.maLoaiNguoiDung}>
                                             {userType.tenLoai}
@@ -110,7 +126,7 @@ function AddNewUser(props) {
                     <div className="md:flex md:items-center mb-6">
                         <div className="md:w-3/4">
                         </div>
-                        <button className="md:w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                        <button type="submit" className="md:w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                             Thêm
                         </button>
                     </div>
@@ -121,29 +137,26 @@ function AddNewUser(props) {
 }
 
 const CreateUserForm = withFormik({
+    enableReinitialize: true,
     mapPropsToValues: () => ({
-        name: '',
-        phoneNumber: '',
+        taiKhoan: '',
         email: '',
-        password: ''
+        matKhau: '',
+        hoTen: '',
+        soDt: '',
+        maNhom: GROUPID,
+        maLoaiNguoiDung: USER_TYPE_CUSTOMER
     }),
     validationSchema: Yup.object().shape({
-        name: Yup.string().required('Name is required!'),
-        phoneNumber: Yup.string().required('Phone number is required!'),
-        email: Yup.string().required('Email is required!').email('Email is invalid!'),
-        password: Yup.string().min(6, 'Password must be at least 6 characters').max(32, 'Password must be at most 32 characters')
+        taiKhoan: Yup.string().required('Vui lòng nhập tài khoản!'),
+        hoTen: Yup.string().required('Vui lòng nhập họ tên!'),
+        soDt: Yup.string().required('Vui lòng nhập số điện thoại!'),
+        email: Yup.string().required('Vui lòng nhập email!').email('Email không hợp lệ!'),
+        matKhau: Yup.string().required('Vui lòng nhập mật khẩu!')
     }),
-    handleSubmit: ({ name, phoneNumber, email, password }, { props, setSubmitting }) => {
+    handleSubmit: (values, { props, setSubmitting }) => {
         setSubmitting(true);
-        // props.dispatch({
-        //     type: CREATE_USER_SAGA,
-        //     userSignup: {
-        //         email: email,
-        //         passWord: password,
-        //         name: name,
-        //         phoneNumber: phoneNumber
-        //     }
-        // })
+        props.dispatch(themNguoiDungAction(values));
     },
     displayName: 'CreateUser',
 })(AddNewUser);

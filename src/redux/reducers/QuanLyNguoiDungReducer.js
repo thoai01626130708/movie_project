@@ -1,5 +1,5 @@
 import { TOKEN, USER_LOGIN } from "../../util/settings/config";
-import { DANG_NHAP_ACTION, SET_DANH_SACH_LOAI_NGUOI_DUNG, SET_DANH_SACH_NGUOI_DUNG, SET_THONG_TIN_NGUOI_DUNG } from "../actions/types/QuanLyNguoiDungType"
+import { DANG_NHAP_ACTION, SET_DANH_SACH_LOAI_NGUOI_DUNG, SET_DANH_SACH_NGUOI_DUNG, SET_THONG_TIN_NGUOI_DUNG, SET_USER_EDIT } from "../actions/types/QuanLyNguoiDungType"
 
 
 let user = {};
@@ -12,8 +12,8 @@ const stateDefault = {
     userLogin: user,
     thongTinNguoiDung: {},
     arrUser: [],
-    arrUserType: []
-     
+    arrUserType: [],
+    userEdit: {}
 }
 
 
@@ -41,6 +41,11 @@ export const QuanLyNguoiDungReducer = (state = stateDefault, action) => {
 
         case SET_DANH_SACH_LOAI_NGUOI_DUNG: {
             state.arrUserType = action.arrUserType;
+            return { ...state }
+        }
+
+        case SET_USER_EDIT: {
+            state.userEdit = action.userEdit;
             return { ...state }
         }
 
