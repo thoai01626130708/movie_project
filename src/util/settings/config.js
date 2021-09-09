@@ -3,6 +3,9 @@ export const TOKEN = 'accessToken';
 export const GROUPID = 'GP01';
 export const USER_LOGIN = 'USER_LOGIN';
 
+export const USER_TYPE_CUSTOMER = 'KhachHang';
+export const USER_TYPE_ADMIN = 'QuanTri';
+
 //Key translation
 export const HELLO = "HELLO";
 export const SIGN_IN = "SIGN_IN";
@@ -20,8 +23,13 @@ export const OPENING_DAY = "OPENING_DAY";
 export const RATING = "RATING";
 export const USERNAME = "USERNAME";
 export const PASSWORD = "PASSWORD";
+export const FULLNAME = "FULLNAME";
+export const PHONE_NUMBER = "PHONE_NUMBER";
 export const INPUT_USERNAME = "INPUT_USERNAME";
 export const INPUT_PASSWORD = "INPUT_PASSWORD";
+export const INPUT_EMAIL = "INPUT_EMAIL";
+export const INPUT_PHONE = "INPUT_PHONE";
+export const INPUT_FULLNAME = "INPUT_FULLNAME";
 export const NOT_HAVE_ACCOUNT = "NOT_HAVE_ACCOUNT";
 export const SHOWTIMES = 'SHOWTIMES';
 export const CHOOSE_SEAT_AND_PAY = 'CHOOSE_SEAT_AND_PAY';

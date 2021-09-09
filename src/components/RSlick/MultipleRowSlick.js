@@ -37,18 +37,10 @@ function SamplePrevArrow(props) {
 const MultipleRowSlick = (props) => {
   const dispatch = useDispatch();
   const { dangChieu, sapChieu } = useSelector(state => state.QuanLyPhimReducer);
-  const [state, setState] = useState({
-    isDisplayModal: false,
-    trailerUrl: ''
-  });
+  const [isDisplayModal, setDisplayModal] = useState(false);
 
-
-  const setDispalyModalCallBack = (display, trailer) => {
-    setState({
-      ...state,
-      isDisplayModal: display,
-      trailerUrl: trailer
-    });
+  const setDispalyModalCallBack = (display) => {
+    setDisplayModal(display);
   }
 
   const renderFilms = () => {
@@ -94,7 +86,7 @@ const MultipleRowSlick = (props) => {
           {renderFilms()}
         </Slider>
       </div>
-      <TrailerModal trailerUrl={state.trailerUrl} isDisplay={state.isDisplayModal} setDispalyModalCallBack={setDispalyModalCallBack} />
+      <TrailerModal isDisplay={isDisplayModal} setDispalyModalCallBack={setDispalyModalCallBack} />
     </div>
   );
 }

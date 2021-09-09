@@ -27,8 +27,11 @@ export const themPhimUploadHinhAction = (formData) => {
         try {
             await quanLyPhimService.themPhimUploadHinh(formData);
             notifiFunction('success', 'Thêm phim thành công!');
+
+            dispatch(layDanhSachPhimAction());
+            history.push('/admin/films');
         } catch (errors) {
-            notifiFunction('success', 'Thêm phim thất bại!');
+            notifiFunction('error', 'Thêm phim thất bại!');
             console.log(errors.response?.data)
         }
     }
@@ -38,17 +41,15 @@ export const themPhimUploadHinhAction = (formData) => {
 export const capNhatPhimUploadAction = (formData) => {
     return async (dispatch) => {
         try {
-
-
             await quanLyPhimService.capNhatPhimUpload(formData);
             notifiFunction('success', 'Cập nhật phim thành công!');
-
+            
             dispatch(layDanhSachPhimAction());
             history.push('/admin/films');
 
 
         } catch (errors) {
-            notifiFunction('success', 'Cập nhật phim thất bại!');
+            notifiFunction('error', 'Cập nhật phim thất bại!');
             console.log(errors.response?.data)
         }
     }
@@ -61,8 +62,6 @@ export const layThongTinPhimAction = (maPhim) => {
         try {
             //Sử dụng tham số thamSo
             const result = await quanLyPhimService.layThongTinPhim(maPhim);
-
-
 
             dispatch({
                 type: SET_THONG_TIN_PHIM,

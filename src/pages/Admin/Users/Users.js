@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { layDanhSachNguoiDungAction, xoaNguoiDungAction } from '../../../redux/actions/QuanLyNguoiDungAction';
 import { history } from '../../../App';
 import { NavLink } from 'react-router-dom';
+import { SET_USER_EDIT } from '../../../redux/actions/types/QuanLyNguoiDungType';
 
 export default function Users() {
     const { arrUser } = useSelector(state => state.QuanLyNguoiDungReducer)
@@ -104,13 +105,33 @@ export default function Users() {
                 return 1;
             },
         },
+
+        {
+            title: 'Loại người dùng',
+            dataIndex: 'maLoaiNguoiDung',
+            sorter: (item2, item1) => {
+                let maLoaiNguoiDungt1 = item1.maLoaiNguoiDung;
+                let maLoaiNguoiDung2 = item2.maLoaiNguoiDung;
+                if (maLoaiNguoiDungt1 < maLoaiNguoiDung2) {
+                    return -1;
+                }
+                return 1;
+            },
+        },
+
         {
             title: 'Thao tác',
             dataIndex: '',
             key: 'x',
             render: (text, user) => {
-                return <div>
-                    <NavLink key={1} className=" mr-2 text-xl" to={`/admin/users/edit/${user.taiKhoan}`}><EditOutlined style={{ color: 'blue' }} /> </NavLink>
+                return <div className="md:flex">
+                    <div className=" mr-2 text-xl cursor-pointer" onClick={() => {
+                        dispatch({
+                            type: SET_USER_EDIT,
+                            userEdit: user
+                        });
+                        history.push(`/admin/users/edit/${user.taiKhoan}`)
+                    }} ><EditOutlined style={{ color: 'blue' }} /> </div>
                     <Popconfirm
                         title="Bạn có chắc muốn xoá người dùng này?"
                         onConfirm={() => {
@@ -138,7 +159,7 @@ export default function Users() {
                     history.push('/admin/users/addnew');
                 }}>Thêm người dùng</Button>
             {renderSearchBox()}
-            <Table columns={columns} rowKey={"userId"} dataSource={arrUser} onChange={() => { }} />
+            <Table columns={columns} rowKey={"id"} dataSource={arrUser} onChange={() => { }} />
         </div>
     )
 }

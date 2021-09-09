@@ -23,7 +23,7 @@ export default function FilmFlip(props) {
                     </div>
                     <div className="w-full h-full" style={{ position: 'absolute', backgroundColor: 'rgba(0,0,0,.5)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <div>
-                            <PlayCircleOutlined onClick={() => { props.setDispalyModalCallBack(true, item.trailer) }} style={{ fontSize: '50px' }} />
+                            <PlayCircleOutlined onClick={() => { props.setDispalyModalCallBack(true) }} style={{ fontSize: '50px' }} />
                             <div className="text-2xl mt-2 font-bold">{item.tenPhim}</div>
                         </div>
                     </div>

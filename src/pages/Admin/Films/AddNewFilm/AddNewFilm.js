@@ -134,7 +134,7 @@ const AddNewFilm = () => {
           <Input name="moTa" onChange={formik.handleChange} />
         </Form.Item>
         <Form.Item label="Ngày khởi chiếu">
-          <DatePicker format={"DD/MM/YYYY"} onChange={handleChangeDatePicker} />
+          <DatePicker disabledDate={d => d && d < moment().startOf('day')} format={"DD/MM/YYYY"} onChange={handleChangeDatePicker} />
         </Form.Item>
         <Form.Item label="Đang chiếu" >
           <Switch onChange={handleChangeSwitch('dangChieu')} />

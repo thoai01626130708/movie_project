@@ -3,6 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { history } from '../../App';
 import { dangNhapAction } from '../../redux/actions/QuanLyNguoiDungAction';
 import { INPUT_PASSWORD, INPUT_USERNAME, NOT_HAVE_ACCOUNT, PASSWORD, SIGN_IN, SIGN_UP, USERNAME } from '../../util/settings/config';
 
@@ -26,7 +27,7 @@ export default function Login(props) {
     return (
         <form onSubmit={formik.handleSubmit} className="lg:w-1/2 xl:max-w-screen-sm">
             <div className="py-12 bg-indigo-100 lg:bg-white flex justify-center lg:justify-start lg:px-12">
-                <div className="cursor-pointer flex items-center">
+                <div className="cursor-pointer flex items-center" onClick={() => { history.push('/home') }}>
                     <div>
                         <svg className="w-10 text-indigo-500" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 225 225" style={{ enableBackground: 'new 0 0 225 225' }} xmlSpace="preserve">
                             <style type="text/css" dangerouslySetInnerHTML={{ __html: "\n                                    .st0{fill:none;stroke:currentColor;stroke-width:20;stroke-linecap:round;stroke-miterlimit:3;}\n                                " }} />
@@ -59,8 +60,7 @@ export default function Login(props) {
                         </div>
                         <div className="mt-10">
                             <button className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide
-                  font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600
-                  shadow-lg">
+                            font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg">
                                 {t(SIGN_IN)}
                             </button>
                         </div>

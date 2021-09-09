@@ -10,14 +10,16 @@ export const dangNhapAction = (thongTinDangNhap) => {
 
         try {
             const result = await quanLyNguoiDungService.dangNhap(thongTinDangNhap);
-
-
             if (result.data.statusCode === 200) {
                 dispatch({
                     type: DANG_NHAP_ACTION,
                     thongTinDangNhap: result.data.content
                 });
+
                 history.goBack();
+            }
+            else {
+                notifiFunction('error', 'Đăng nhập thất bại. Vui lòng thử lại!');
             }
 
         } catch (error) {
@@ -27,6 +29,28 @@ export const dangNhapAction = (thongTinDangNhap) => {
     }
 }
 
+
+export const dangKyAction = (thongTinDangKy) => {
+    return async (dispatch) => {
+
+        try {
+            const result = await quanLyNguoiDungService.dangKy(thongTinDangKy);
+
+
+            if (result.data.statusCode === 200) {
+                notifiFunction('success', 'Đăng ký thành công. Vui lòng đăng nhập để sử dụng!');
+                history.push('/login');
+            }
+            else {
+                notifiFunction('error', 'Đăng ký thất bại. Vui lòng thử lại!');
+            }
+
+        } catch (error) {
+            notifiFunction('error', 'Đăng ký thất bại. Vui lòng thử lại!');
+            console.log(error.response?.data);
+        }
+    }
+}
 
 
 
@@ -96,20 +120,41 @@ export const layDanhSachLoaiNguoiDungAction = () => {
         } catch (error) {
             console.log(error.response?.data)
         }
-    };
+    }
 }
 
-export const capNhatThongTinNguoiDungAction = (thongTinCapNhat) => {
+export const themNguoiDungAction = (user) => {
     return async (dispatch) => {
         try {
-            console.log('thongTinCapNhat',thongTinCapNhat)
-            const result = await quanLyNguoiDungService.capNhatNguoiDung(thongTinCapNhat);
+            const result = await quanLyNguoiDungService.themNguoiDung(user);
+
+            if (result.data.statusCode === 200) {
+                notifiFunction('success', 'Thêm người dùng thành công!');
+
+                dispatch(layDanhSachNguoiDungAction());
+                history.push('/admin/users');
+            }
+
+        } catch (errors) {
+            notifiFunction('error', 'Thêm người dùng thất bại!');
+            console.log(errors.response?.data)
+        }
+    }
+}
+
+export const capNhatThongTinNguoiDungAdminAction = (thongTinCapNhat) => {
+    return async (dispatch) => {
+        try {
+            const result = await quanLyNguoiDungService.capNhatNguoiDungAdmin(thongTinCapNhat);
             if (result.data.statusCode === 200) {
                 notifiFunction('success', 'Cập nhật người dùng thành công!');
+
+                dispatch(layDanhSachNguoiDungAction());
+                history.push('/admin/users');
             }
         } catch (error) {
-            console.log(error.response?.data);
             notifiFunction('error', 'Cập nhật người dùng thất bại!');
+            console.log(error.response?.data);
         }
     }
 }

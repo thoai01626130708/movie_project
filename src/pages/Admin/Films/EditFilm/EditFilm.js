@@ -25,7 +25,6 @@ const EditFilm = (props) => {
     dispatch(layThongTinPhimAction(id));
   }, [])
 
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -47,7 +46,9 @@ const EditFilm = (props) => {
       //Tạo đối tượng formdata => Đưa giá trị values từ formik vào formdata
       let formData = new FormData();
       for (let key in values) {
-        if (key !== 'hinhAnh') {
+        if (key === 'ngayKhoiChieu') {
+          formData.append(key, moment(values[key]).format('DD/MM/YYYY'));
+        } else if (key !== 'hinhAnh') {
           formData.append(key, values[key]);
         } else {
           if (values.hinhAnh !== null) {
@@ -62,8 +63,7 @@ const EditFilm = (props) => {
   })
 
   const handleChangeDatePicker = (value) => {
-    console.log('datepicker', value)
-    let ngayKhoiChieu = value ? moment(value).format('DD/MM/YYYY') : undefined;
+    let ngayKhoiChieu = moment(value);
     formik.setFieldValue('ngayKhoiChieu', ngayKhoiChieu);
   }
 
@@ -145,7 +145,7 @@ const EditFilm = (props) => {
           <Input name="moTa" onChange={formik.handleChange} value={formik.values.moTa} />
         </Form.Item>
         <Form.Item label="Ngày khởi chiếu">
-          <DatePicker onChange={handleChangeDatePicker} format="DD/MM/YYYY" value={moment(formik.values.ngayKhoiChieu)} />
+          <DatePicker allowClear={false} onChange={handleChangeDatePicker} format="DD/MM/YYYY" value={moment(formik.values.ngayKhoiChieu)} />
         </Form.Item>
         <Form.Item label="Đang chiếu">
           <Switch name="dangChieu" onChange={handleChangeSwitch('dangChieu')} checked={formik.values.dangChieu} />

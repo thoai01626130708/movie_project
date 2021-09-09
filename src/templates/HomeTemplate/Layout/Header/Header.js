@@ -7,7 +7,7 @@ import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
-import { CONTACT, HELLO, HOME, LOG_OUT, SIGN_IN, TOKEN, USER_LOGIN } from '../../../../util/settings/config';
+import { CONTACT, HELLO, HOME, LOG_OUT, SIGN_IN, SIGN_UP, TOKEN, USER_LOGIN } from '../../../../util/settings/config';
 
 const { Option } = Select;
 
@@ -29,10 +29,10 @@ export default function Header(props) {
             return <Fragment>
                 <button onClick={() => {
                     history.push('/login')
-                }} className="self-center px-8 py-3 rounded">{t(SIGN_IN)}</button>
+                }} className="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-coolGray-50">{t(SIGN_IN)}</button>
                 <button onClick={() => {
                     history.push('/register')
-                }} className="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-coolGray-50">{t('SIGN_UP')}</button>
+                }} className="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-coolGray-50">{t(SIGN_UP)}</button>
 
             </Fragment>
         }
