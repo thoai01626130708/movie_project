@@ -29,23 +29,23 @@ export default function Header(props) {
             return <Fragment>
                 <button onClick={() => {
                     history.push('/login')
-                }} className="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-coolGray-50">{t(SIGN_IN)}</button>
+                }} className="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-coolGray-50 text-lg">{t(SIGN_IN)}</button>
                 <button onClick={() => {
                     history.push('/register')
-                }} className="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-coolGray-50">{t(SIGN_UP)}</button>
+                }} className="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-coolGray-50 text-lg">{t(SIGN_UP)}</button>
 
             </Fragment>
         }
 
 
-        return <Fragment> <button onClick={() => { history.push('/profile') }} className="self-center px-8 py-3 rounded">
-            {t(HELLO)} {userLogin.taiKhoan}</button>
+        return <Fragment> <button onClick={() => { history.push('/profile') }} className="self-center px-8 py-3 text-lg">
+            {t(HELLO)}<span className="ml-1 mr-1 text-lg font-bold">{userLogin.taiKhoan}</span>!</button>
             <button onClick={() => {
                 localStorage.removeItem(USER_LOGIN);
                 localStorage.removeItem(TOKEN);
                 history.push('/home');
                 window.location.reload();
-            }} className="text-yellow-500 mr-5">{t(LOG_OUT)}</button>
+            }} className="text-yellow-500 mr-5 text-lg">{t(LOG_OUT)}</button>
         </Fragment>
     }
     return (
@@ -56,13 +56,13 @@ export default function Header(props) {
                 </NavLink>
                 <ul className="items-stretch hidden space-x-3 lg:flex">
                     <li className="flex">
-                        <NavLink to="/home" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-violet-600 border-violet-600 text-white" activeClassName="border-b-2 border-white">{t(HOME)}</NavLink>
+                        <NavLink to="/home" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-white text-lg" activeClassName="border-b-2 border-white">{t(HOME)}</NavLink>
                     </li>
                     <li className="flex">
-                        <NavLink to="/contact" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-white" activeClassName="border-b-2 border-white">{t(CONTACT)}</NavLink>
+                        <NavLink to="/contact" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-white text-lg" activeClassName="border-b-2 border-white">{t(CONTACT)}</NavLink>
                     </li>
                     <li className="flex">
-                        <NavLink to="/admin" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-white" activeClassName="border-b-2 border-white">Admin</NavLink>
+                        <NavLink to="/admin" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-white text-lg" activeClassName="border-b-2 border-white">Admin</NavLink>
                     </li>
 
                 </ul>

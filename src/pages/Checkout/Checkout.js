@@ -160,11 +160,10 @@ function Checkout(props) {
             <div className="grid grid-cols-12">
                 <div className="col-span-9">
                     <div className="flex flex-col items-center mt-5">
-
                         <div className="bg-black " style={{ width: '80%', height: 15 }}>
                         </div>
                         <div className={`${style['trapezoid']} text-center`}>
-                            <h3 className="mt-3 text-black">{t(SCREEN)}</h3>
+                            <h3 className="mt-3 text-black ">{t(SCREEN)}</h3>
                         </div>
                         <div>
                             {renderSeats()}
@@ -172,8 +171,8 @@ function Checkout(props) {
                     </div>
 
                     <div className="mt-5 flex justify-center">
-                        <table className=" divide-y divide-gray-200 w-2/3">
-                            <thead className="bg-gray-50 p-5">
+                        <table className=" divide-y divide-gray-600 w-2/3">
+                            <thead className=" p-5">
                                 <tr>
                                     <th>{t(AVAILABLE)}</th>
                                     <th>{t(SELECTED)}</th>
@@ -183,7 +182,7 @@ function Checkout(props) {
                                     <th>{t(OCCUPIED)}</th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="divide-y divide-gray-600">
                                 <tr>
                                     <td><button className="ghe text-center"> <CheckOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} /> </button> </td>
                                     <td><button className="ghe gheDangDat text-center"> <CheckOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} /></button> </td>
@@ -191,7 +190,6 @@ function Checkout(props) {
                                     <td><button className="ghe gheDaDat text-center"> <CheckOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} /> </button> </td>
                                     <td><button className="ghe gheDaDuocDat text-center"> <CheckOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} /> </button> </td>
                                     <td><button className="ghe gheKhachDat text-center"> <CheckOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} /> </button> </td>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -204,12 +202,12 @@ function Checkout(props) {
                     }, 0).toLocaleString()} đ</h3>
                     <hr />
                     <h3 className="text-xl mt-2">{thongTinPhim.tenPhim}</h3>
-                    <p>{t(ADDRESS)}: {thongTinPhim.tenCumRap} - {thongTinPhim.tenRap}</p>
-                    <p>{t(DATE_TIME)}: {thongTinPhim.ngayChieu} - {thongTinPhim.gioChieu}</p>
+                    <div><span className="font-bold mr-1">{t(ADDRESS)}:</span> {thongTinPhim.tenCumRap} - {thongTinPhim.tenRap}</div>
+                    <div><span className="font-bold mr-1">{t(DATE_TIME)}:</span> {thongTinPhim.ngayChieu} - {thongTinPhim.gioChieu}</div>
                     <hr />
                     <div className="flex flex-row my-5">
                         <div className="w-4/5">
-                            <span className="text-red-400 text-lg">{t(SEAT_CODE)}</span>
+                            <span className="text-red-500 font-bold text-lg mr-1">{t(SEAT_CODE)}</span>
 
                             {_.sortBy(danhSachGheDangDat, ['stt']).map((gheDD, index) => {
                                 return <span key={index} className="text-green-500 text-xl"> {gheDD.stt}</span>
@@ -225,12 +223,12 @@ function Checkout(props) {
                     </div>
                     <hr />
                     <div className="my-5">
-                        <i>Email</i> <br />
+                        <i className="font-bold">Email</i> <br />
                         {userLogin.email}
                     </div>
                     <hr />
                     <div className="my-5">
-                        <i>Phone</i> <br />
+                        <i className="font-bold">Phone</i> <br />
                         {userLogin.soDT}
                     </div>
                     <hr />
@@ -240,7 +238,7 @@ function Checkout(props) {
                             thongTinDatVe.maLichChieu = props.match.params.id;
                             thongTinDatVe.danhSachVe = danhSachGheDangDat;
                             dispatch(datVeAction(thongTinDatVe));
-                        }} className="bg-green-500 text-white w-full text-center py-3 font-bold text-2xl cursor-pointer">
+                        }} className="bg-green-500 text-white w-full text-center py-3 font-bold text-2xl cursor-pointer rounded">
                             {t(BOOKING)}
                         </div>
                     </div>
@@ -273,34 +271,34 @@ export default function CheckoutTab(props) {
     const operations = <Fragment>
         {!_.isEmpty(userLogin) ? <Fragment> <button onClick={() => {
             history.push('/profile')
-        }}> <div style={{ width: 50, height: 50, display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="text-2xl ml-5 rounded-full bg-red-200">{userLogin.taiKhoan.substr(0, 1)}</div>{t(HELLO)} {userLogin.taiKhoan}!</button> <button onClick={() => {
-            localStorage.removeItem(USER_LOGIN);
-            localStorage.removeItem(TOKEN);
-            history.push('/home');
-            window.location.reload();
-        }} className="text-blue-800">{t(LOG_OUT)}</button> </Fragment> : ''}
-
-
+        }}> <div className="self-center px-8 py-3 text-lg">{t(HELLO)}<span className="ml-1 mr-1 text-lg font-bold">{userLogin.taiKhoan}</span>!</div></button>
+            <button onClick={() => {
+                localStorage.removeItem(USER_LOGIN);
+                localStorage.removeItem(TOKEN);
+                history.push('/home');
+                window.location.reload();
+            }} className="text-blue-800 text-lg">{t(LOG_OUT)}</button> </Fragment> : ''}
     </Fragment>
 
-    return <div className="p-5">
-        <Tabs tabBarExtraContent={operations} defaultActiveKey="1" activeKey={tabActive} onChange={(key) => {
-            dispatch({
-                type: CHANGE_TAB_ACTIVE,
-                number: key.toString()
-            })
-        }}>
-            <TabPane tab={t(CHOOSE_SEAT_AND_PAY).toUpperCase()} key="1" >
-                <Checkout {...props} />
-            </TabPane>
-            <TabPane tab={t(BOOKING_RESULT).toUpperCase()} key="2">
-                <KetQuaDatVe {...props} />
-            </TabPane>
-            <TabPane tab={<div className="text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}><NavLink to="/"><HomeOutlined style={{ marginLeft: 10, fontSize: 25 }} /></NavLink></div>} key="3">
+    return <div className="blur-lg p-5" style={{ backgroundImage: 'url(./../img/theater.jpg)' }}>
+        <div className="p-5 rounded-2xl" style={{ background: 'rgba(255,255,255,.8)' }}>
+            <Tabs tabBarExtraContent={operations} defaultActiveKey="1" activeKey={tabActive} onChange={(key) => {
+                dispatch({
+                    type: CHANGE_TAB_ACTIVE,
+                    number: key.toString()
+                })
+            }}>
+                <TabPane tab={t(CHOOSE_SEAT_AND_PAY).toUpperCase()} key="1" >
+                    <Checkout {...props} />
+                </TabPane>
+                <TabPane tab={t(BOOKING_RESULT).toUpperCase()} key="2">
+                    <KetQuaDatVe {...props} />
+                </TabPane>
+                <TabPane tab={<div className="text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}><NavLink to="/"><HomeOutlined style={{ marginLeft: 10, fontSize: 25 }} /></NavLink></div>} key="3">
 
-            </TabPane>
-        </Tabs>
-
+                </TabPane>
+            </Tabs>
+        </div>
     </div>
 
 }
@@ -321,14 +319,14 @@ function KetQuaDatVe(props) {
             const seats = _.first(ticket.danhSachGhe);
 
             return <div className="p-2 lg:w-1/3 md:w-1/2 w-full" key={index}>
-                <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
+                <div className="h-full flex items-center bg-red-50 border-gray-500 border p-4 rounded-lg">
                     <img alt="team" className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src={ticket.hinhAnh} />
                     <div className="flex-grow">
-                        <h2 className="text-pink-500 title-font font-medium text-2xl">{ticket.tenPhim}</h2>
-                        <p className="text-gray-500"><span className="font-bold">{t(TIME)}:</span> {moment(ticket.ngayDat).format('hh:mm A')} - <span className="font-bold">{t(DATE)}:</span>  {moment(ticket.ngayDat).format('DD-MM-YYYY')} .</p>
+                        <h2 className="text-green-700 title-font font-medium text-2xl">{ticket.tenPhim}</h2>
+                        <p><span className="font-bold">{t(TIME)}:</span> {moment(ticket.ngayDat).format('hh:mm A')} - <span className="font-bold">{t(DATE)}:</span>  {moment(ticket.ngayDat).format('DD-MM-YYYY')} .</p>
                         <p><span className="font-bold">{t(ADDRESS)}:</span> {seats.tenHeThongRap}   </p>
                         <p>
-                            <span className="font-bold">{t(THEATER_NAME)}:</span>  {seats.tenCumRap} - <span className="font-bold">{t(SEAT_CODE)}:</span>  {ticket.danhSachGhe.map((ghe, index) => { return <span className="text-green-500 text-xl" key={index}> [ {ghe.tenGhe} ] </span> })}
+                            <span className="font-bold">{t(THEATER_NAME)}:</span> {seats.tenCumRap} - <span className="font-bold">{t(SEAT_CODE)}:</span>  {ticket.danhSachGhe.map((ghe, index) => { return <span className="text-green-500 text-xl" key={index}> [ {ghe.tenGhe} ] </span> })}
                         </p>
                     </div>
                 </div>
@@ -341,7 +339,7 @@ function KetQuaDatVe(props) {
         <section className="text-gray-600 body-font">
             <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-col text-center w-full mb-20">
-                    <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4  text-purple-600 ">{t(BOOKING_HISTORY)}</h1>
+                    <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4  text-yellow-600 ">{t(BOOKING_HISTORY)}</h1>
                     <p className="lg:w-2/3 mx-auto leading-relaxed text-base">{t(BOOKING_HISTORY_MESSAGE)}</p>
                 </div>
                 <div className="flex flex-wrap -m-2">
