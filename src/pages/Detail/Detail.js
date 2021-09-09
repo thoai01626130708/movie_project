@@ -18,19 +18,16 @@ export default function Detail(props) {
 
     const filmDetail = useSelector(state => state.QuanLyPhimReducer.filmDetail);
 
-    const [filmIgmUrl, setFilmDetail] = useState({});
-
     const dispatch = useDispatch();
 
     useEffect(() => {
         //Lấy thông tin param từ url
         const { id } = props.match.params;
         dispatch(layThongTinChiTietPhim(id));
-        setFilmDetail(filmDetail.hinhAnh);
     }, [])
 
     return (
-        <div style={{ backgroundImage: `url(${filmIgmUrl})`, backgroundSize: '100%', backgroundPosition: 'center', minHeight: '100vh' }}>
+        <div style={{ backgroundImage: `url(${filmDetail.hinhAnh}), url('../img/film.jpg')`, backgroundSize: '100%', backgroundPosition: 'center', minHeight: '100vh' }}>
             <CustomCard
                 style={{ paddingTop: 150, minHeight: '100vh' }}
                 effectColor="#fff" // required
@@ -41,7 +38,7 @@ export default function Detail(props) {
                 <div className="grid grid-cols-12">
                     <div className="col-span-5 col-start-3">
                         <div className="grid grid-cols-3">
-                            <img className="col-span-1" src={filmIgmUrl} style={{ width: '100%', height: 300 }} alt="" onError={e => { e.target.onerror = null; e.target.src = '../img/film.jpg';setFilmDetail('../img/film.jpg') }}/>
+                            <img className="col-span-1" src={filmDetail.hinhAnh} style={{ width: '100%', height: 300 }} alt="" onError={e => { e.target.onerror = null; e.target.src = '../img/film.jpg' }} />
                             <div className="col-span-2 ml-5" style={{ marginTop: '25%' }}>
                                 <p className="text-sm">{t(OPENING_DAY)}: {moment(filmDetail.ngayKhoiChieu).format('DD.MM.YYYY')}</p>
                                 <p className="text-4xl leading-3">{filmDetail.tenPhim}</p>
