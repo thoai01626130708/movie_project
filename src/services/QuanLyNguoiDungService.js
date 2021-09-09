@@ -41,6 +41,9 @@ export class QuanLyNguoiDungService extends baseService {
     capNhatNguoiDungAdmin = (thongTinCapNhat) => {
         return this.post('/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung', thongTinCapNhat);
     }
+    capNhatNguoiDung = (thongTinCapNhat) => {
+        return this.put('/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung', thongTinCapNhat);
+    }
 
 }
 
