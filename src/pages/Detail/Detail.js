@@ -29,8 +29,6 @@ export default function Detail(props) {
         setFilmDetail(filmDetail.hinhAnh);
     }, [])
 
-    console.log('filmDetail',filmDetail);
-
     return (
         <div style={{ backgroundImage: `url(${filmIgmUrl})`, backgroundSize: '100%', backgroundPosition: 'center', minHeight: '100vh' }}>
             <CustomCard
